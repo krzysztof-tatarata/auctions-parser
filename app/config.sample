@@ -1,0 +1,10 @@
+[db]
+hostname=
+username=
+password=
+database=
+
+[komornik.pl]
+auctions_page=https://licytacje.komornik.pl/Description/Published
+max_retries=5
+timeout=60
