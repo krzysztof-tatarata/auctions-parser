@@ -11,6 +11,8 @@ if args.pages_range:
     pages = set(range(int(args.pages_range.split(',')[0]), int(args.pages_range.split(',')[1])+1))
 if args.pages:
     pages = pages.union(map(int, args.pages.split(',')))
+if not(args.pages_range and args.pages):
+    pages = {1}
 
 obj = Auctions()
 for page in pages:
