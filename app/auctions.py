@@ -38,13 +38,14 @@ class Auctions(object):
             'User-Agent': ua.random,
         }
         url = self.__config.get('komornik.pl', 'auctions_page') if not page else self.__config.get('komornik.pl', 'auctions_page') + '?page=' + str(page)
+        print('Getting %s' % url)
         try:
             response = requests.get(url, headers=headers, timeout=int(self.__config.get('komornik.pl', 'timeout')))
         except requests.exceptions.ReadTimeout:
             if self.__retries < self.__max_retries:
                 self.__retries += 1
                 sleep(randint(5, 10))
-                self.__get_auctions_page(page)
+                return self.__get_auctions_page(page)
             else:
                 raise Exception('Timeout. Nie pobrano strony')
         if response.status_code == 200:
@@ -52,7 +53,7 @@ class Auctions(object):
         elif self.__retries < self.__max_retries:
             self.__retries += 1
             sleep(randint(5, 10))
-            self.__get_auctions_page(page)
+            return self.__get_auctions_page(page)
         else:
             raise Exception('Nie pobrano strony')
 
