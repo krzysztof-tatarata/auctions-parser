@@ -4,16 +4,16 @@ from configparser import ConfigParser
 
 class DB(object):
     def __init__(self):
-        self.config = ConfigParser()
-        self.config.read('app/config')
+        self.__config = ConfigParser()
+        self.__config.read('app/config')
         self.db = None
-        self.connect()
+        self.__connect()
 
-    def connect(self):
-        hostname = self.config.get('db', 'hostname')
-        username = self.config.get('db', 'username')
-        password = self.config.get('db', 'password')
-        database = self.config.get('db', 'database')
+    def __connect(self):
+        hostname = self.__config.get('db', 'hostname')
+        username = self.__config.get('db', 'username')
+        password = self.__config.get('db', 'password')
+        database = self.__config.get('db', 'database')
 
         conn = pymysql.connect(host=hostname, user=username, passwd=password, db=database, connect_timeout=3000)
         conn.autocommit(True)
