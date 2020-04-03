@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <style>
+            table, td, th {
+              border: 1px solid #ddd;
+              text-align: left;
+            }
+
+            table {
+              border-collapse: collapse;
+              width: 100%;
+            }
+
+            th, td {
+              text-align: left;
+              padding: 8px;
+            }
+
+            tr:nth-child(even){background-color: #f2f2f2}
+
+            th {
+              background-color: #4CAF50;
+              color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>Nowe obwieszczenia o terminie opisu i oszacowania</h2>
+        <strong>{{ auction_headers[notification['type']] if notification['type'] in auction_headers else notification['type'] }}</strong>: {{ notification['pattern'] }}
+        <table>
+            <tr>
+                {% for key in auctions[0].keys() %}
+                    <th>{{ auction_headers[key] if key in auction_headers else key }}</th>
+                {% endfor %}
+            </tr>
+            {% for auction in auctions %}
+            <tr>
+                {% for key in auction.keys() %}
+                    {% if key == 'id' %}
+                <td><a href="{{ link_prefix }}{{ auction[key] }}">{{ auction[key] }}</a></td>
+                    {% else %}
+                        <td>{{ auction[key] }}</td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>
