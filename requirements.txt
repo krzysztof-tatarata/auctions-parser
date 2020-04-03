@@ -1,4 +1,6 @@
-beautifulsoup4==4.8.0
-fake-useragent==0.1.11
-PyMySQL==0.9.3
-requests==2.22.0
+beautifulsoup4>=4.8.0
+fake-useragent>=0.1.11
+PyMySQL>=0.9.3
+requests>=2.22.0
+simplegmail>=2.0.0
+Jinja2>=2.11.1
