@@ -6,8 +6,7 @@ class DB(object):
     def __init__(self):
         self.__config = ConfigParser()
         self.__config.read('app/config')
-        self.db = None
-        self.__connect()
+        self.cursor = self.__connect()
 
     def __connect(self):
         hostname = self.__config.get('db', 'hostname')
@@ -17,15 +16,14 @@ class DB(object):
 
         conn = pymysql.connect(host=hostname, user=username, passwd=password, db=database, connect_timeout=3000)
         conn.autocommit(True)
-        self.db = conn.cursor(pymysql.cursors.DictCursor)
-        return self.db
+        return conn.cursor(pymysql.cursors.DictCursor)
 
     def insert(self, table, data, ignore_duplicates=False):
         placeholders = ', '.join(['%s'] * len(data))
         columns = ', '.join(data.keys())
         sql = "INSERT INTO %s ( %s ) VALUES ( %s )" % (table, columns, placeholders)
         try:
-            self.db.execute(sql, list(data.values()))
+            self.cursor.execute(sql, list(data.values()))
         except pymysql.err.IntegrityError:
             if not ignore_duplicates:
                 raise
